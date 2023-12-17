@@ -1,7 +1,7 @@
 package com.bridgelabz.cabinvoicegenerator;
 
 /**
- * @desc Represents an invoice containing details such as the total number of rides,total fare, and average fare per ride.
+ * @desc Represents an invoice containing details such as the total number of rides, total fare, and average fare per ride.
  */
 public class Invoice {
 
@@ -9,13 +9,14 @@ public class Invoice {
     private double totalFare;
 
     /**
-     * @desc Constructs a new Invoice object with the given total number of rides and total fare.
+     * @desc Constructs a new Invoice object with the given total number of rides, total fare, and list of rides.
      * @param totalRides The total number of rides included in the invoice.
      * @param totalFare  The total fare for all rides in the invoice.
      */
     public Invoice(int totalRides, double totalFare) {
         this.totalRides = totalRides;
         this.totalFare = totalFare;
+        // Add this field to store rides
     }
 
     /**

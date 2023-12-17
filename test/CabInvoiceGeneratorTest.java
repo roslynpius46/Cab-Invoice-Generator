@@ -1,6 +1,8 @@
 import com.bridgelabz.cabinvoicegenerator.CabInvoiceGenerator;
 import com.bridgelabz.cabinvoicegenerator.Ride;
 import com.bridgelabz.cabinvoicegenerator.Invoice;
+import com.bridgelabz.cabinvoicegenerator.RideRepository;
+import com.bridgelabz.cabinvoicegenerator.InvoiceService;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -52,4 +54,32 @@ public class CabInvoiceGeneratorTest {
         assertEquals(105.0, invoice.getTotalFare(), 0.01);
         assertEquals(52.5, invoice.getAverageFare(), 0.01);
     }
+
+    /**
+     * To verify if the function returns invoice for a given user
+     */
+    @Test
+    public void generateInvoiceForUser_ShouldReturnInvoiceForGivenUserId() {
+        InvoiceService invoiceService = new InvoiceService();
+        RideRepository rideRepository = new RideRepository();
+
+        // Assume rides for a specific user with ID "user1"
+        List<Ride> rides = new ArrayList<>();
+        rides.add(new Ride(5, 15));
+        rides.add(new Ride(3, 10));
+
+        // Assume the user ID "user1"
+        String userId = "user1";
+
+        // Stub the RideRepository to return rides for the given user ID
+        rideRepository.addRides(userId, rides);
+        invoiceService.setRideRepository(rideRepository);
+
+        Invoice invoice = invoiceService.generateInvoiceForUser(userId);
+
+        assertEquals(2, invoice.getTotalRides());
+        assertEquals(105.0, invoice.getTotalFare(), 0.01);
+        assertEquals(52.5, invoice.getAverageFare(), 0.01);
+    }
+
 }
