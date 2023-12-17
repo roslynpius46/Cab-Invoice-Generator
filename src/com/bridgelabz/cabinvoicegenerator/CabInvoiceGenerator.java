@@ -1,5 +1,7 @@
 package com.bridgelabz.cabinvoicegenerator;
 
+import java.util.List;
+
 /**
  * @desc This class represents a cab invoice generator
  */
@@ -19,4 +21,18 @@ public class CabInvoiceGenerator {
         double totalFare = distance * COST_PER_KM + time * COST_PER_MINUTE;
         return Math.max(totalFare, MINIMUM_FARE);
     }
+
+    /**
+     * @desc Calculates total fare for all the rides
+     * @param rides The list of rides for which to calculate the total fare.
+     * @return Total fare of all the rides
+     */
+    public double calculateTotalFare(List<Ride> rides) {
+        double totalFare = 0;
+        for (Ride ride : rides) {
+            totalFare += calculateFare(ride.getDistance(), ride.getTime());
+        }
+        return totalFare;
+    }
+
 }
