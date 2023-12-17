@@ -1,8 +1,4 @@
-import com.bridgelabz.cabinvoicegenerator.CabInvoiceGenerator;
-import com.bridgelabz.cabinvoicegenerator.Ride;
-import com.bridgelabz.cabinvoicegenerator.Invoice;
-import com.bridgelabz.cabinvoicegenerator.RideRepository;
-import com.bridgelabz.cabinvoicegenerator.InvoiceService;
+import com.bridgelabz.cabinvoicegenerator.*;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -17,7 +13,7 @@ public class CabInvoiceGeneratorTest {
     @Test
     public void calculateFare_ShouldReturnMinimumFareForShortJourney() {
         CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
-        double fare = invoiceGenerator.calculateFare(0.0004, 5);
+        double fare = invoiceGenerator.calculateFare(0.0004, 5,RideCategory.NORMAL);
         assertEquals(5.0, fare, 0.01);
     }
 
@@ -29,8 +25,8 @@ public class CabInvoiceGeneratorTest {
         CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
 
         List<Ride> rides = new ArrayList<>();
-        rides.add(new Ride(5, 15)); // Ride 1: 5 kilometers, 15 minutes
-        rides.add(new Ride(3, 10)); // Ride 2: 3 kilometers, 10 minutes
+        rides.add(new Ride(5, 15,RideCategory.NORMAL)); // Ride 1: 5 kilometers, 15 minutes
+        rides.add(new Ride(3, 10,RideCategory.NORMAL)); // Ride 2: 3 kilometers, 10 minutes
 
         double totalFare = invoiceGenerator.calculateTotalFare(rides);
 
@@ -45,8 +41,8 @@ public class CabInvoiceGeneratorTest {
         CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
 
         List<Ride> rides = new ArrayList<>();
-        rides.add(new Ride(5, 15)); // Ride 1: 5 kilometers, 15 minutes
-        rides.add(new Ride(3, 10)); // Ride 2: 3 kilometers, 10 minutes
+        rides.add(new Ride(5, 15,RideCategory.NORMAL)); // Ride 1: 5 kilometers, 15 minutes
+        rides.add(new Ride(3, 10,RideCategory.NORMAL)); // Ride 2: 3 kilometers, 10 minutes
 
         Invoice invoice = invoiceGenerator.generateInvoice(rides);
 
@@ -65,8 +61,8 @@ public class CabInvoiceGeneratorTest {
 
         // Assume rides for a specific user with ID "user1"
         List<Ride> rides = new ArrayList<>();
-        rides.add(new Ride(5, 15));
-        rides.add(new Ride(3, 10));
+        rides.add(new Ride(5, 15,RideCategory.NORMAL));
+        rides.add(new Ride(3, 10,RideCategory.NORMAL));
 
         // Assume the user ID "user1"
         String userId = "user1";
@@ -80,6 +76,20 @@ public class CabInvoiceGeneratorTest {
         assertEquals(2, invoice.getTotalRides());
         assertEquals(105.0, invoice.getTotalFare(), 0.01);
         assertEquals(52.5, invoice.getAverageFare(), 0.01);
+    }
+
+    /**
+     * @desc Testing function for the premium mode of ride
+     */
+    @Test
+    public void calculateFare_ShouldReturnPremiumFareForPremiumRides() {
+        CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
+
+        // Premium ride: 7 kilometers, 20 minutes
+        double fare = invoiceGenerator.calculateFare(7, 20, RideCategory.PREMIUM);
+
+        // Expected fare for Premium Ride: Rs. 7 * 15 (Rs. 105) + 20 * 2 (Rs. 40)
+        assertEquals(145.0, fare, 0.01);
     }
 
 }

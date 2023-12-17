@@ -13,7 +13,7 @@ public class Main{
         double time = 15;
 
         CabInvoiceGenerator invoiceGenerator = new CabInvoiceGenerator();
-        double fare = invoiceGenerator.calculateFare(distance, time);
+        double fare = invoiceGenerator.calculateFare(distance, time,RideCategory.NORMAL);
 
         System.out.println("Total Fare: Rs. " + fare);
         System.out.println();
@@ -28,8 +28,8 @@ public class Main{
 
         // Add rides for a user
         List<Ride> userRides = new ArrayList<>();
-        userRides.add(new Ride(5, 15)); // Ride 1: 5 kilometers, 15 minutes
-        userRides.add(new Ride(3, 10)); // Ride 2: 3 kilometers, 10 minutes
+        userRides.add(new Ride(5, 15,RideCategory.NORMAL)); // Ride 1: 5 kilometers, 15 minutes
+        userRides.add(new Ride(3, 10,RideCategory.NORMAL)); // Ride 2: 3 kilometers, 10 minutes
         rideRepository.addRides("user1", userRides);
 
         // Generate an invoice for the user

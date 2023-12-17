@@ -7,15 +7,17 @@ public class Ride {
 
     private double distance;
     private double time;
+    private RideCategory rideCategory;
 
     /**
      * @desc Constructs a new Ride object with the given distance and time.
      * @param distance The distance traveled in kilometers.
      * @param time     The time taken for the ride in minutes.
      */
-    public Ride(double distance, double time) {
+    public Ride(double distance, double time, RideCategory rideCategory) {
         this.distance = distance;
         this.time = time;
+        this.rideCategory = rideCategory;
     }
 
     /**
@@ -32,5 +34,13 @@ public class Ride {
      */
     public double getTime() {
         return time;
+    }
+
+    /**
+     * @desc Gets the ride category.
+     * @return Ride category
+     */
+    public RideCategory getRideCategory() {
+        return rideCategory;
     }
 }
