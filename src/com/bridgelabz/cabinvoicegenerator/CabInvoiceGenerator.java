@@ -35,4 +35,10 @@ public class CabInvoiceGenerator {
         return totalFare;
     }
 
+    public Invoice generateInvoice(List<Ride> rides) {
+        int totalRides = rides.size();
+        double totalFare = calculateTotalFare(rides);
+        return new Invoice(totalRides, totalFare);
+    }
+
 }
